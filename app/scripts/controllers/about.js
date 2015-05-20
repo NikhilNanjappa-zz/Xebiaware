@@ -10,6 +10,9 @@
 angular.module('xebiawareApp')
   .controller('AboutCtrl', function ($scope, $http) {
 
+
+		
+
   	var relativePos = 
   	{ 
   		101 : { "top":"9%", "left":"6%"}, 
@@ -51,11 +54,18 @@ angular.module('xebiawareApp')
   		$("#img_sixth").before(div);
   	}
 
+
   	for(var i=1;i<13;i++) {
   		var div = document.createElement('div');
   		div.id = 120+i;
   		div.innerHTML = '0';
   		div.className = 'circle';
+			// $('.circle').tooltip({
+			//  animated : 'fade',
+			//  placement : 'bottom',
+			//  html : true,
+			//  title : 'Add'
+			// });
   		div.style.top = relativePos[120+i].top;
   		div.style.left = relativePos[120+i].left;
   		$("#img_fifth").before(div);
@@ -82,6 +92,20 @@ angular.module('xebiawareApp')
 		    	var message = data;//.message;
 					for (var i = 0; i< message.length;i++) {
 							$('#'+beaconIDTAGMap[message[i]['beacon_id']]).html(message[i].active_users.length);
+							var active_users_names = message[i].active_users.join("<br>");
+							$('#'+beaconIDTAGMap[message[i]['beacon_id']]).tooltip({
+							 animated : 'fade',
+							 placement : 'bottom',
+							 html : true,
+							 title : active_users_names
+							});
+							// console.log('#'+beaconIDTAGMap[message[i]['beacon_id']]);
+							// console.log($('#'+beaconIDTAGMap[message[i]['beacon_id']]).tooltip({
+							//  animated : 'fade',
+							//  placement : 'bottom',
+							//  html : true,
+							//  title : 'Add'
+							// }));
 					};
 		    });
 
@@ -89,7 +113,7 @@ angular.module('xebiawareApp')
 				var message = JSON.parse(data.message);
 				for (var i = 0; i< message.length;i++) {
 						$('#'+beaconIDTAGMap[message[i]['beacon_id']]).html(message[i].active_users.length);
-						var sonar_effect_id = (beaconIDTAGMap[message[i]['beacon_id']]);
+						// var sonar_effect_id = (beaconIDTAGMap[message[i]['beacon_id']]);
 						// $("#sonar_effect_id")
 				};
 			});

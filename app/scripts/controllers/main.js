@@ -38,7 +38,7 @@ angular.module('xebiawareApp')
 				console.log(array);
 
 				for (var j in array) {
-	  			active_users_count_in_room.push(_.size(j));
+	  			active_users_count_in_room.push(_.size(array[j]));
 				};
 
 				console.log("avg of"+ all_room_names[i] + " " + average(active_users_count_in_room));
@@ -149,7 +149,8 @@ angular.module('xebiawareApp')
 		        yAxis: {
 		            title: {
 		                text: 'Occupancy'
-		            }
+		            },
+		            min: 0
 		        },
 		        series: [{
 		            name: 'occupancy',
