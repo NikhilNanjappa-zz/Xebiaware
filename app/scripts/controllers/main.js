@@ -67,7 +67,7 @@ angular.module('xebiawareApp')
 			            }
 			        },
 			        title: {
-			            text: 'Average rooms Occupancy per day'
+			            text: 'Average rooms Occupancy for 19th May 2015'
 			        },
 			        xAxis: {
 			            categories: all_room_names
@@ -97,7 +97,43 @@ angular.module('xebiawareApp')
   $http({method: 'GET', url: "http://default-environment-hgkgm8yf2y.elasticbeanstalk.com/getBeaconTimeseriesData/2015-05-19/0"})
 		.success(function(data) {
 
-			console.log(_.pluck(_.where(data.beaconsList, { 'beacon_room_name': 'Common Area' }), 'active_users'));
+			console.log(_.pluck(_.where(data.beaconsList, { 'beacon_room_name': 'Common Area' }), 'timestamp'));
+
+			// console.log(moment(('2015-05-19T05:24:23.014Z')).utc().format("HH").toString());
+
+			for(var i=1;i<25;i++) {
+				var tim_array = _.pluck(_.where(data.beaconsList, { 'beacon_room_name': 'Common Area' }), 'timestamp');
+				var hour_array = [];
+
+				for(var j in tim_array) {
+					hour_array.push(moment((tim_array[j])).utc().format("HH").toString());
+				}
+
+				// console.log(hour_array);
+
+			}
+
+			console.log(hour_array);
+
+			var sorted_array = [];
+			sorted_array = foo(hour_array);
+
+			function foo(arr) {
+		    var a = [], b = [], prev;
+
+		    arr.sort();
+		    for ( var i = 0; i < arr.length; i++ ) {
+		        if ( arr[i] !== prev ) {
+		            a.push(arr[i]);
+		            b.push(1);
+		        } else {
+		            b[b.length-1]++;
+		        }
+		        prev = arr[i];
+		    }
+
+		    return [a, b];
+			}
 
 		$(function () { 
 		    $('#chart2').highcharts({
@@ -105,10 +141,10 @@ angular.module('xebiawareApp')
 		            type: 'line'
 		        },
 		        title: {
-		            text: 'Common area occupancy per day'
+		            text: 'Common area occupancy for 19th May 2015'
 		        },
 		        xAxis: {
-		            categories: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+		            categories: sorted_array[0]
 		        },
 		        yAxis: {
 		            title: {
@@ -117,7 +153,7 @@ angular.module('xebiawareApp')
 		        },
 		        series: [{
 		            name: 'occupancy',
-		            data: [5, 7, 3,1,1,1,1,1,1,1,11,1,1,1,1,1,1,1,1,2,3,4,5,6]
+		            data: sorted_array[1]
 		        }]
 		    });
 		});
