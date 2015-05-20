@@ -23,6 +23,10 @@
   opacity: 1;
 }
 .circle::after {
+	-webkit-animation: sonarWave 1s linear infinite;
+  -moz-animation: sonarWave 1s linear infinite;
+  -o-animation: sonarWave 1s linear infinite;
+  -ms-transition: sonarWave 1s linear infinite;
   animation: sonarWave 1s linear infinite;
 }
 
@@ -31,6 +35,10 @@
     opacity: 0.5;
   }
   to {
+  	-webkit-transform: scale(4.5);
+	  -moz-transform: scale(4.5);
+	  -o-transform: scale(4.5);
+	  -ms-transition: scale(4.5);
     transform: scale(4.5);
     opacity: 0;
   }
