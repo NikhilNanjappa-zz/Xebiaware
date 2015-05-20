@@ -11,7 +11,7 @@ angular.module('xebiawareApp')
   .controller('MainCtrl', function ($scope, $http, dateFilter) {
 
   	//Average rooms Occupancy per day
-    $http({method: 'GET', url: "http://192.168.1.93:3000/getBeaconTimeseriesData/2015-05-19/0"})
+    $http({method: 'GET', url: "http://default-environment-hgkgm8yf2y.elasticbeanstalk.com/getBeaconTimeseriesData/2015-05-19/0"})
     .success(function(data) {
 
 			var all_room_names = _.uniq(_.pluck(data.beaconsList, 'beacon_room_name'));
@@ -94,30 +94,34 @@ angular.module('xebiawareApp')
 
 
   //Average rooms Occupancy per day per room
-	$(function () { 
-	    $('#chart2').highcharts({
-	        chart: {
-	            type: 'bar'
-	        },
-	        title: {
-	            text: 'Fruit Consumption'
-	        },
-	        xAxis: {
-	            categories: ['Apples', 'Bananas', 'Oranges']
-	        },
-	        yAxis: {
-	            title: {
-	                text: 'Fruit eaten'
-	            }
-	        },
-	        series: [{
-	            name: 'Jane',
-	            data: [1, 0, 4]
-	        }, {
-	            name: 'John',
-	            data: [5, 7, 3]
-	        }]
-	    });
-	});
+  $http({method: 'GET', url: "http://default-environment-hgkgm8yf2y.elasticbeanstalk.com/getBeaconTimeseriesData/2015-05-19/0"})
+		.success(function(data) {
+
+			console.log(_.pluck(_.where(data.beaconsList, { 'beacon_room_name': 'Common Area' }), 'active_users'));
+
+		$(function () { 
+		    $('#chart2').highcharts({
+		        chart: {
+		            type: 'line'
+		        },
+		        title: {
+		            text: 'Common area occupancy per day'
+		        },
+		        xAxis: {
+		            categories: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'Occupancy'
+		            }
+		        },
+		        series: [{
+		            name: 'occupancy',
+		            data: [5, 7, 3,1,1,1,1,1,1,1,11,1,1,1,1,1,1,1,1,2,3,4,5,6]
+		        }]
+		    });
+		});
+
+	}).error(function() {});	
 
 });

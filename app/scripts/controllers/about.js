@@ -65,7 +65,7 @@ angular.module('xebiawareApp')
   	var pusher = new Pusher('0be41d4178d4a396fa5f');
   	var channel = pusher.subscribe("XebiAware");
 
-    $http({method: 'GET', url: "http://192.168.1.93:3000/getBeaconsList"})
+    $http({method: 'GET', url: "http://default-environment-hgkgm8yf2y.elasticbeanstalk.com/getBeaconsList"})
     .success(function(data) {
 
     		var beaconsList = data.beaconsList;
@@ -77,7 +77,7 @@ angular.module('xebiawareApp')
     			beaconIDTAGMap[beaconsList[i]['beacon_id']] = beaconsList[i]['beacon_room_tag'];
     		};
 
-			$http({method: 'GET', url: "http://192.168.1.93:3000/getAllBeaconStatus"})
+			$http({method: 'GET', url: "http://default-environment-hgkgm8yf2y.elasticbeanstalk.com/getAllBeaconStatus"})
 		    .success(function(data) {
 		    	var message = data;//.message;
 					for (var i = 0; i< message.length;i++) {
