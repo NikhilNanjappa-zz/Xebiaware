@@ -94,7 +94,7 @@ angular.module('xebiawareApp')
 
 
   //Average rooms Occupancy per day per room
-  $http({method: 'GET', url: "http://default-environment-hgkgm8yf2y.elasticbeanstalk.com/getBeaconTimeseriesData/2015-05-19/0"})
+  $http({method: 'GET', url: "http://default-environment-hgkgm8yf2y.elasticbeanstalk.com/getBeaconTimeseriesData/2015-05-21/0"})
 		.success(function(data) {
 
 			console.log(_.pluck(_.where(data.beaconsList, { 'beacon_room_name': 'Common Area' }), 'timestamp'));
@@ -141,7 +141,7 @@ angular.module('xebiawareApp')
 		            type: 'line'
 		        },
 		        title: {
-		            text: 'Common area occupancy for 19th May 2015'
+		            text: 'Common area occupancy for 21st May 2015'
 		        },
 		        xAxis: {
 		            categories: sorted_array[0]

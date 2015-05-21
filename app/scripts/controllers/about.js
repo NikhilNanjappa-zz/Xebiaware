@@ -30,6 +30,7 @@ angular.module('xebiawareApp')
   		113: { "top":"62%", "left":"64%"},
   		114: { "top":"76%", "left":"64%"},
   		115: { "top":"86%", "left":"59%"},
+  		116: { "top":"69%", "left":"37%"},
 
   		121: { "top":"10%", "left":"15%"},
   		122: { "top":"10%", "left":"30%"},
@@ -44,7 +45,7 @@ angular.module('xebiawareApp')
   		131: { "top":"61%", "left":"39%"},
   		132: { "top":"62%", "left":"69%"},
   	}
-  	for(var i=1;i<16;i++) {
+  	for(var i=1;i<17;i++) {
   		var div = document.createElement('div');
   		div.id = 100+i;
   		div.innerHTML = '0';
@@ -60,12 +61,6 @@ angular.module('xebiawareApp')
   		div.id = 120+i;
   		div.innerHTML = '0';
   		div.className = 'circle';
-			// $('.circle').tooltip({
-			//  animated : 'fade',
-			//  placement : 'bottom',
-			//  html : true,
-			//  title : 'Add'
-			// });
   		div.style.top = relativePos[120+i].top;
   		div.style.left = relativePos[120+i].left;
   		$("#img_fifth").before(div);
@@ -89,9 +84,16 @@ angular.module('xebiawareApp')
 
 			$http({method: 'GET', url: "http://default-environment-hgkgm8yf2y.elasticbeanstalk.com/getAllBeaconStatus"})
 		    .success(function(data) {
-		    	var message = data;//.message;
+		    	var message = data;
+		    	$('.circle').css('opacity',0);
 					for (var i = 0; i< message.length;i++) {
 							$('#'+beaconIDTAGMap[message[i]['beacon_id']]).html(message[i].active_users.length);
+
+							if(message[i].active_users.length > 0) {
+								var ide = beaconIDTAGMap[message[i]['beacon_id']];
+								$('#'+ide).css('opacity',1);
+							}
+
 							var active_users_names = message[i].active_users.join("<br>");
 							$('#'+beaconIDTAGMap[message[i]['beacon_id']]).tooltip({
 							 animated : 'fade',
@@ -99,23 +101,28 @@ angular.module('xebiawareApp')
 							 html : true,
 							 title : active_users_names
 							});
-							// console.log('#'+beaconIDTAGMap[message[i]['beacon_id']]);
-							// console.log($('#'+beaconIDTAGMap[message[i]['beacon_id']]).tooltip({
-							//  animated : 'fade',
-							//  placement : 'bottom',
-							//  html : true,
-							//  title : 'Add'
-							// }));
 					};
 		    });
 
   		channel.bind("active", function(data) {
 				var message = JSON.parse(data.message);
-				for (var i = 0; i< message.length;i++) {
-						$('#'+beaconIDTAGMap[message[i]['beacon_id']]).html(message[i].active_users.length);
-						// var sonar_effect_id = (beaconIDTAGMap[message[i]['beacon_id']]);
-						// $("#sonar_effect_id")
-				};
+				$('.circle').css('opacity',0);
+					for (var i = 0; i< message.length;i++) {
+							$('#'+beaconIDTAGMap[message[i]['beacon_id']]).html(message[i].active_users.length);
+
+							if(message[i].active_users.length > 0) {
+								var ide = beaconIDTAGMap[message[i]['beacon_id']];
+								$('#'+ide).css('opacity',1);
+							}
+
+							var active_users_names = message[i].active_users.join("<br>");
+							$('#'+beaconIDTAGMap[message[i]['beacon_id']]).tooltip({
+							 animated : 'fade',
+							 placement : 'bottom',
+							 html : true,
+							 title : active_users_names
+							});
+					};
 			});
     }).error(function() {});
 

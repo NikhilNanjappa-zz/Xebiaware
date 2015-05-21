@@ -9,6 +9,7 @@
   text-align: center;
   z-index: 99;
 }
+
 .circle::after {
   position: absolute;
   top: 0;
@@ -20,14 +21,14 @@
   background-color: red;
   z-index: -1;
   pointer-events: none;
-  opacity: 1;
+  opacity: 0;
 }
 .circle::after {
-	-webkit-animation: sonarWave 1s linear infinite;
-  -moz-animation: sonarWave 1s linear infinite;
-  -o-animation: sonarWave 1s linear infinite;
-  -ms-transition: sonarWave 1s linear infinite;
-  animation: sonarWave 1s linear infinite;
+	-webkit-animation: sonarWave 1s linear 3;
+  -moz-animation: sonarWave 1s linear 3;
+  -o-animation: sonarWave 1s linear 3;
+  -ms-transition: sonarWave 1s linear 3;
+  animation: sonarWave 1s linear 3;
 }
 
 @keyframes sonarWave {
